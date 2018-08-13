@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {NavBar,List,WingBlank,WhiteSpace,InputItem,Radio,Button} from "antd-mobile";
 import Logo from '../../components/logo/logo'
+import {reqRegister} from "../../api/index";
 
 export default class Register extends Component {
     //初始化状态
@@ -14,7 +15,10 @@ export default class Register extends Component {
         this.props.history.replace('/login')
     }
     Register= () =>{
-        console.log(this.state);
+        reqRegister(this.state).then(res =>{
+            console.log(res.data);
+            
+        })
         
     }
     handleChange= (name,val) =>{
