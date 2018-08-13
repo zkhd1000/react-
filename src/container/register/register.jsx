@@ -11,7 +11,7 @@ export default class Register extends Component {
         type:'dashen'
     }
     toLogin =() =>{
-        this.props.history.replace('./login')
+        this.props.history.replace('/login')
     }
     Register= () =>{
         console.log(this.state);

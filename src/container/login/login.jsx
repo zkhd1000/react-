@@ -9,7 +9,7 @@ export default class Register extends Component {
         password:'',
     }
     toRegister =() =>{
-        this.props.history.replace('./register')
+        this.props.history.replace('/register')
     }
     login= () =>{
         console.log(this.state);
@@ -35,7 +35,7 @@ export default class Register extends Component {
                         onChange={(val)=>{this.handleChange('password',val)}}>密码:</InputItem>
             <WhiteSpace/>
             <Button type='primary' onClick={this.login}>登&nbsp;&nbsp;录</Button>
-            <Button  onClick={this.Register}>没有账户</Button>
+            <Button  onClick={this.toRegister}>没有账户</Button>
             <WhiteSpace/>
             </List>
         </WingBlank>
