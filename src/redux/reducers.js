@@ -1,32 +1,29 @@
-/*
-包含n个reducer函数的模块
- */
+
 import {combineReducers} from 'redux'
-
-// 管理xxx状态的reducer
-const initXxx = []
-function xxx(state = initXxx, action) {
-  console.log('xxx()', action)
-  switch (action.type) {
-
+import { AUTH_SUCCESS,ERROR_MSG } from "./action-types";//有几个type就会有几个同步action
+const initUser={
+  username:'',
+  type:'',
+  msg:'',
+  redirectTo:'',
+}
+function user(state=initUser,action) {
+  switch(action.type){
+    case AUTH_SUCCESS:
+      const user=action.data
+    return {...user,redirectTo:'/'}
+    case ERROR_MSG:
+    const msg=action.data 
+    return{...state,msg}
     default:
-      return state
+    return state
   }
 }
 
-const initYyy = {}
-function yyy(state = initYyy, action) {
-  console.log('yyy()', action)
-  switch (action.type) {
 
-    default:
-      return state
-  }
-}
 
 export default combineReducers({
-  xxx,
-  yyy
+ user
 })
 /*
 1. 向外暴露是一个整合后的reducer函数: function (state, action)
