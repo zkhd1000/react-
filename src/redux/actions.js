@@ -3,7 +3,7 @@
  * 1.同步action
  * 2.异步action
  */
-import {reqRegister,reqLogin,reqUpdateUser} from '../api/index'
+import {reqRegister,reqLogin,reqUpdateUser,reqUser} from '../api/index'
 import { AUTH_SUCCESS,ERROR_MSG,RECEIVE_USER,RESET_USER } from "./action-types";//有几个type就会有几个同步action
 //注册或者登录的成功同步action
 const authSuccess =(user) =>({type:AUTH_SUCCESS,data:user})
@@ -73,6 +73,17 @@ export function login({username,password}) {
 export const updateUser =(user) =>{
     return async dispatch =>{
         const response= await reqUpdateUser(user)
+        const result=response.data
+        if(result.code===0){
+            dispatch(receiveUser(result.data))
+        }else{
+            dispatch(resetUser(result.msg))
+        }
+    }
+}
+export const getUser =() =>{
+    return async dispatch =>{
+        const response =await reqUser()
         const result=response.data
         if(result.code===0){
             dispatch(receiveUser(result.data))
