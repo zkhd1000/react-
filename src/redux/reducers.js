@@ -1,6 +1,6 @@
-
+import { getRedirectPath } from "../utils/index";
 import {combineReducers} from 'redux'
-import { AUTH_SUCCESS,ERROR_MSG } from "./action-types";//有几个type就会有几个同步action
+import { AUTH_SUCCESS,ERROR_MSG,RECEIVE_USER,RESET_USER } from "./action-types";//有几个type就会有几个同步action
 const initUser={
   username:'',
   type:'',
@@ -9,12 +9,20 @@ const initUser={
 }
 function user(state=initUser,action) {
   switch(action.type){
-    case AUTH_SUCCESS:
-      const user=action.data
-    return {...user,redirectTo:'/'}
+    case AUTH_SUCCESS: // 认证成功
+    const redirectTo = getRedirectPath(action.data.type, action.data.header)
+    return {...action.data, redirectTo}
+  
     case ERROR_MSG:
     const msg=action.data 
     return{...state,msg}
+    
+    case RECEIVE_USER:
+    return action.data
+
+    case RESET_USER:
+    return {...initUser,msg:action.data}
+
     default:
     return state
   }

@@ -38,7 +38,7 @@ import { register } from "../../redux/actions";
         <Logo/>
         <WingBlank>
             <List>
-                <p>{msg}</p>
+            <p className='error-msg'>{msg}</p>
             <InputItem type='username' placeholder='请输入用户名'
                         onChange={(val) =>{this.handleChange('username',val)}}>用户名:</InputItem>
             <WhiteSpace/>
