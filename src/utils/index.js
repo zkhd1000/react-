@@ -1,6 +1,6 @@
 export function getRedirectPath(type,header) {
     let path=''
-    path+= type ==='dashen'?'/laoban':'dashen'
+    path+= type ==='dashen'?'/dashen':'laoban'
     if(!header){
         path+='info'
     }
