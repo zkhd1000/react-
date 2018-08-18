@@ -3,8 +3,8 @@
  * 1.同步action
  * 2.异步action
  */
-import {reqRegister,reqLogin,reqUpdateUser,reqUser} from '../api/index'
-import { AUTH_SUCCESS,ERROR_MSG,RECEIVE_USER,RESET_USER } from "./action-types";//有几个type就会有几个同步action
+import {reqRegister,reqLogin,reqUpdateUser,reqUser,reqUserList,} from '../api/index'
+import { AUTH_SUCCESS,ERROR_MSG,RECEIVE_USER,RESET_USER,RECEIVE_USER_LIST } from "./action-types";//有几个type就会有几个同步action
 //注册或者登录的成功同步action
 const authSuccess =(user) =>({type:AUTH_SUCCESS,data:user})
 //显示失败的同步action
@@ -12,7 +12,9 @@ const errorMsg =(msg) =>({type:ERROR_MSG,data:msg})
 //
 const receiveUser =(user)=>({type:RECEIVE_USER,data:user})
 //
-const resetUser =(msg) =>({type:RESET_USER,data:msg})
+export const resetUser =(msg) =>({type:RESET_USER,data:msg})
+
+const receiveUserList = (userList) => ({type: RECEIVE_USER_LIST, data: userList})
 /**
  * 注册的异步action
  */
@@ -54,10 +56,8 @@ export function login({username,password}) {
           }
         //执行异步代码(发送Ajax请求)
         const response=await reqLogin({username,password})
-        console.log('___',response);
-        
         const result = response.data//{code:0,data:user} ||{code:1,msg:'xxx}
-        console.log('=====',result);
+        
         if(result.code===0){
             //分发同步action(成功)
             const user=result.data
@@ -92,3 +92,15 @@ export const getUser =() =>{
         }
     }
 }
+
+export function getUserList(type) {
+    return async dispatch => {
+      const response = await reqUserList(type)
+      const result = response.data
+      console.log('lalalalalal')
+      if(result.code===0) {
+        const userList = result.data
+        dispatch(receiveUserList(userList))
+      }
+    }
+  }

@@ -44,6 +44,14 @@ class Main extends Component {
       text:'个人'
     }
   ]
+  componentDidMount = () => {
+    const userid = Cookies.get('userid')
+    const {user} = this.props
+    if(userid && !user._id) {
+      this.props.getUser()
+    }
+  }
+  
   render() {
     const pathname =this.props.location.pathname
     const userid = Cookies.get('userid')

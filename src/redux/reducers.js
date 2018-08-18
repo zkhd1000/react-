@@ -1,37 +1,64 @@
-import { getRedirectPath } from "../utils/index";
-import {combineReducers} from 'redux'
-import { AUTH_SUCCESS,ERROR_MSG,RECEIVE_USER,RESET_USER } from "./action-types";//有几个type就会有几个同步action
-const initUser={
-  username:'',
-  type:'',
-  msg:'',
-  redirectTo:'',
+import {
+  getRedirectPath
+} from "../utils/index";
+import {
+  combineReducers
+} from 'redux'
+import {
+  AUTH_SUCCESS,
+  ERROR_MSG,
+  RECEIVE_USER,
+  RESET_USER,
+  RECEIVE_USER_LIST
+} from "./action-types"; //有几个type就会有几个同步action
+const initUser = {
+  username: '',
+  type: '',
+  msg: '',
+  redirectTo: '',
 }
-function user(state=initUser,action) {
-  switch(action.type){
+
+
+function user(state = initUser, action) {
+  switch (action.type) {
     case AUTH_SUCCESS: // 认证成功
-    const redirectTo = getRedirectPath(action.data.type, action.data.header)
-    return {...action.data, redirectTo}
-  
+      const redirectTo = getRedirectPath(action.data.type, action.data.header)
+      return { ...action.data,
+        redirectTo
+      }
+
     case ERROR_MSG:
-    const msg=action.data 
-    return{...state,msg}
-    
+      const msg = action.data
+      return { ...state,
+        msg
+      }
+
     case RECEIVE_USER:
-    return action.data
+      return action.data
 
     case RESET_USER:
-    return {...initUser,msg:action.data}
+      return { ...initUser,
+        msg: action.data
+      }
 
+    default:
+      return state
+  }
+}
+const initUserList = []
+function userList(state = initUserList, action) {
+  switch (action.type) {
+    
+    case RECEIVE_USER_LIST:
+      return action.data
     default:
     return state
   }
 }
 
-
-
 export default combineReducers({
- user
+  user,
+  userList
 })
 /*
 1. 向外暴露是一个整合后的reducer函数: function (state, action)
